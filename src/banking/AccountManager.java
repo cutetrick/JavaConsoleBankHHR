@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class AccountManager {
 
-
 	// makeAccount 인스턴스 생성
 	public static int accCnt = 0;
 	public static Account accArr[] = new Account[50];
@@ -39,7 +38,7 @@ public class AccountManager {
 
 	// 입금하기
 	public void depositMoney() {
-		int accNumY=0;
+		int accNumY = 0;
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("계좌번호를 입력하세요:");
 		String accNum2 = scanner.nextLine();
@@ -47,25 +46,20 @@ public class AccountManager {
 		System.out.print("입금하실 금액을 입력하세요:");
 		int depNum = scanner.nextInt();
 
-//		for (Account accnum : accArr) {
-//			if (accnum.getAccount().equals(accNum2)) {
-//				accnum.setBalance(accnum.getBalance() + depNum);
-//				System.out.print("입금이 완료되었습니다");
-//				System.out.println("잔고: " + accnum.getBalance());
-//			accNumY=1;
-//			}
-//		}
-		for(int i=0 ; i<accCnt ; i++) {
-			if(accNum2.equals(accArr[i].getAccount())) {
-				accNumY=1;
-				System.out.println("잔고: " + accArr[i]);
+		for (int i = 0; i < accCnt; i++) {
+			if (accNum2.equals(accArr[i].getAccount())) {
+				accNumY = 1;
+
+				accArr[i].setBalance(accArr[i].getBalance() + depNum);
+				System.out.println("총 계좌 잔고: " + accArr[i].getBalance());
+
 			}
 		}
-		if(accNumY ==0) {
+		if (accNumY == 0) {
 			System.out.println("요청하신 계좌번호가 없습니다.");
 		}
 	}
-		
+
 	// 출금하기
 	public void withdrawMoney() {
 		System.out.print("계좌번호를 입력하세요:");
@@ -73,36 +67,32 @@ public class AccountManager {
 		String accNum2 = scanner.nextLine();
 		System.out.print("출금하실 금액을 입력하세요:");
 		int withNum = scanner.nextInt();
-		
+
 		int accNumY = 0;
-//		boolean accountFound = false;
-//		for (Account accnum2 : accArr) {
-//			if (accnum2.getAccount().equals(accNum2)) {
-//				if (accnum2.getBalance() >= withNum) {
-//					accnum2.setBalance(accnum2.getBalance() - withNum);
-//					System.out.println("출금이 완료되었습니다.");
-//					System.out.println("잔고: " + accnum2.getBalance());
-//				} else {
-//					System.out.println("잔액이 부족합니다.");
-//				}
-//				accountFound = true;
-//			}
-//		}
-		for(int i=0 ; i<accCnt ; i++) {
-			if(accNum2.equals(accArr[i].getAccount())) {
-				accNumY=1;
+
+		for (int i = 0; i < accCnt; i++) {
+			if (accNum2.equals(accArr[i].getAccount())) {
+				accNumY = 1;
+				if (accArr[i].getBalance() >= withNum) {
+					accArr[i].setBalance(accArr[i].getBalance() - withNum);
+					System.out.println("출금이 완료되었습니다.");
+					System.out.println("계좌 잔고: " + accArr[i].getBalance());
+				} else {
+					System.out.println("잔액이 부족합니다.");
+				}
 			}
 		}
-		if (accNumY==0) {
+		if (accNumY == 0) {
 			System.out.println("입력하신 계좌번호가 없습니다.");
 		}
 	}
 
 	// 계좌 모든 정보 불러오기
 	public static void showAccInfo() {
-		System.out.println("==showAccInfo() 호출됨==");
+		System.out.println("--------------------");
 		for (int i = 0; i < accCnt; i++) {
 			accArr[i].showAccount();
+			System.out.println("--------------------");
 		}
 	}
 }
