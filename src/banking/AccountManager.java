@@ -20,25 +20,67 @@ public class AccountManager {
 		System.out.print("선택");
 	}
 
+
 	// 계좌생성하기
 	public void makeAccount() {
-		System.out.println("==makeAccount() 호출됨===");
+		String accNum, name=null;
+		int balan=0;
+		//이자율
+		int rate;
+		// 
+		String credit;
 		Scanner scanner = new Scanner(System.in);
-		// 정보 입력 받기
-		System.out.print("계좌번호:");
-		String accNum = scanner.nextLine();
-		System.out.print("고객이름:");
-		String name = scanner.nextLine();
-		System.out.print("잔고:");
-		int balan = scanner.nextInt();
-		// 입력받은 정보를 통해 인스턴스 생성
-		Account account = new Account(accNum, name, balan);
-		// 인스턴스 배열에 추가
-		accArr[accCnt++] = account;
+		System.out.println("1.보통계좌");
+		System.out.println("2.신용신뢰계좌");
+		while (true) {
+			System.out.print("선택해주세요");
+			int number2 = scanner.nextInt();
+			scanner.nextLine();
+			//1또는 2 아니면 유효하지 않는 숫자로 넘어감
+			if (!((number2 == 1) || (number2 == 2))) {				
+				System.out.println("유효하지 않는 숫자입니다.");
+			} else {
+				//맞을 시 정보 입력 받기로 넘어감
+				System.out.print("계좌번호:");
+				accNum = scanner.nextLine();
+				System.out.print("고객이름:");
+				name = scanner.nextLine();
+				System.out.print("잔고:");
+				balan = scanner.nextInt();
+				
+				//만약 입력한 숫자가 1과 같을 때
+				if(number2 == 1) {
+					System.out.print("기본이자%(정수로 입력): ");
+					rate = scanner.nextInt();
+					//인스턴스 생성(들어간 정보)
+					Account account = new NormalAccount(accNum, name, balan, rate);
+					//인스턴스 저장 및 증가
+					accArr[accCnt++] = account;
+					System.out.println("정상적으로 입력되었습니다");
+				}
+				//만약 입력한 숫자가 2와 같을때
+				if(number2 ==2) {
+					System.out.print("기본이자%(정수로 입력): ");
+					rate = scanner.nextInt();
+					scanner.nextLine(); 
+					System.out.print("신용등급(A,B,C등급):");
+					credit = scanner.nextLine();
+					Account account = new HighCreditAccount(accNum, name, balan, rate, credit);
+					accArr[accCnt++] = account;
+					System.out.println("정상적으로 입력되었습니다");
+				}
+				//계정생성됨.메뉴로 들어감
+				return;
+			}
+	
+		}
+		
 	}
 
 	// 입금하기
 	public void depositMoney() {
+//		NormalAccount normal = new NormalAccount(account, name, balance,rate);
+//		HighCreditAccount high = new HighCreditAccount(account, name, balance,rate,credit);
 		int accNumY=0;
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("계좌번호를 입력하세요:");
@@ -46,19 +88,21 @@ public class AccountManager {
 
 		System.out.print("입금하실 금액을 입력하세요:");
 		int depNum = scanner.nextInt();
-
-//		for (Account accnum : accArr) {
-//			if (accnum.getAccount().equals(accNum2)) {
-//				accnum.setBalance(accnum.getBalance() + depNum);
-//				System.out.print("입금이 완료되었습니다");
-//				System.out.println("잔고: " + accnum.getBalance());
-//			accNumY=1;
-//			}
-//		}
 		for(int i=0 ; i<accCnt ; i++) {
 			if(accNum2.equals(accArr[i].getAccount())) {
+				//accArr[i]를 노말로 바꿔불러옴
+				if(accArr[i] instanceof NormalAccount) {
+					NormalAccount normal = (NormalAccount)accArr[i];
+				}
+				// accArr[i]를 high로 바꿔불러옴
+				if(accArr[i] instanceof HighCreditAccount) {
+					HighCreditAccount high = (HighCreditAccount)accArr[i];
+				}
+
+				//잔고 합산
 				accNumY=1;
-				System.out.println("잔고: " + accArr[i]);
+				accArr[i].setBalance(accArr[i].getBalance() + depNum);
+				System.out.println("잔고: " + accArr[i].getBalance());
 			}
 		}
 		if(accNumY ==0) {
@@ -75,34 +119,41 @@ public class AccountManager {
 		int withNum = scanner.nextInt();
 		
 		int accNumY = 0;
-//		boolean accountFound = false;
-//		for (Account accnum2 : accArr) {
-//			if (accnum2.getAccount().equals(accNum2)) {
-//				if (accnum2.getBalance() >= withNum) {
-//					accnum2.setBalance(accnum2.getBalance() - withNum);
-//					System.out.println("출금이 완료되었습니다.");
-//					System.out.println("잔고: " + accnum2.getBalance());
-//				} else {
-//					System.out.println("잔액이 부족합니다.");
-//				}
-//				accountFound = true;
-//			}
-//		}
+
 		for(int i=0 ; i<accCnt ; i++) {
 			if(accNum2.equals(accArr[i].getAccount())) {
+		
 				accNumY=1;
+				//잔고가 출금할 금액보다 큰지 작은지 확인
+				if(accArr[i].getBalance() >= withNum) {
+					//잔고에서 출금금액 빼기
+				 accArr[i].setBalance(accArr[i].getBalance() - withNum);
+				 //총 남은 계좌 잔고
+				 System.out.println("계좌잔고: " + accArr[i].getBalance());
+			}//잔고가 부족시 else로 처리
+				else {
+				System.out.println("잔고가 부족합니다.");	
+				}
 			}
 		}
 		if (accNumY==0) {
 			System.out.println("입력하신 계좌번호가 없습니다.");
 		}
+		
+		
 	}
 
 	// 계좌 모든 정보 불러오기
 	public static void showAccInfo() {
-		System.out.println("==showAccInfo() 호출됨==");
+		System.out.println("---------------------");
 		for (int i = 0; i < accCnt; i++) {
 			accArr[i].showAccount();
+			System.out.println("---------------------");
 		}
 	}
 }
+
+
+	
+	
+	

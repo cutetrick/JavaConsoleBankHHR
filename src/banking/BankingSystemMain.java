@@ -18,7 +18,7 @@ public class BankingSystemMain {
 	          switch(Menu) {
 	          
 	          case ICustomDefine.MAKE:
-	             handler.makeAccount();
+	        	 handler.makeAccount();
 	             break;
 	          case ICustomDefine.DEPOSIT:
 	             handler.depositMoney();
