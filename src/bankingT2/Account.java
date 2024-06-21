@@ -31,17 +31,17 @@ public class Account {
 		//계좌번호의 해시값을 반환
 		return accNumber.hashCode();
 	}
-	@Override
-    public boolean equalas(Object obj) {
-		//계좌번호가 동일한 값인지 확인하여 boolean값 반환
-		Account acc = (Account)obj;
-		if (acc.accNumber.equals(this.accNumber)) {
-			return true;
-		}
-		else {
-		
-			return false;
-		}
- 	}
+//	@Override
+//    public boolean equalas(Object obj) {
+//		//계좌번호가 동일한 값인지 확인하여 boolean값 반환
+//		Account acc = (Account)obj;
+//		if (acc.accNumber.equals(this.accNumber)) {
+//			return true;
+//		}
+//		else {
+//		
+//			return false;
+//		}
+// 	}
 	
 }

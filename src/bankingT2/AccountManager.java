@@ -1,7 +1,5 @@
 package bankingT2;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -83,22 +81,22 @@ public class AccountManager {
 		}
 	}
 	//컨렉션에 저장된 정보를 Text파일로 저장하기
-	public void saveInfoTxt() {
-	try {
-	PrintWriter out = new PrintWriter(new FileWriter("src/bankignT2/AutoSaveAccount.txt"));
+//	public void saveInfoTxt() {
+//	try {
+//	PrintWriter out = new PrintWriter(new FileWriter("src/bankignT2/AutoSaveAccount.txt"));
 
-	for(Account ac : hashSet) {
-		out.printf("제 나이는 %d살 입니다.", 9);
-		
-	}
-	out.close();
-	}	
-	catch{
-	
-		
-	System.out.println("printf.txt가 생성되었습니다.");
-		}
-	}
-	
+//	for(Account ac : hashSet) {
+//		out.printf("제 나이는 %d살 입니다.", 9);
+//		
+//	}
+//	out.close();
+//	}	
+//	catch{
+//	
+//		
+//	System.out.println("printf.txt가 생성되었습니다.");
+//		}
+//	}
+//	
 }
 
