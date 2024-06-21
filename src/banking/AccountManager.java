@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class AccountManager {
 
-
 	// makeAccount 인스턴스 생성
 	public static int accCnt;
 	public static Account accArr[];
@@ -85,15 +84,20 @@ public class AccountManager {
 
 	// 입금하기
 	public void depositMoney() {
+<<<<<<< HEAD
 //		NormalAccount normal = new NormalAccount(account, name, balance,rate);
 //		HighCreditAccount high = new HighCreditAccount(account, name, balance,rate,credit);
 		int accNumY=0;
+=======
+		int accNumY = 0;
+>>>>>>> branch 'main' of https://github.com/cutetrick/JavaConsoleBankHHR.git
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("계좌번호를 입력하세요:");
 		String accNum2 = scanner.nextLine();
 
 		System.out.print("입금하실 금액을 입력하세요:");
 		int depNum = scanner.nextInt();
+<<<<<<< HEAD
 		scanner.nextLine();
 		for(int i=0 ; i<accCnt ; i++) {
 			//입력한 금액이 0보다 작을 수 없다. 음수인지 확인
@@ -132,13 +136,23 @@ public class AccountManager {
 				accNumY = 1;
 			
 			
+=======
+
+		for (int i = 0; i < accCnt; i++) {
+			if (accNum2.equals(accArr[i].getAccount())) {
+				accNumY = 1;
+
+				accArr[i].setBalance(accArr[i].getBalance() + depNum);
+				System.out.println("총 계좌 잔고: " + accArr[i].getBalance());
+
+>>>>>>> branch 'main' of https://github.com/cutetrick/JavaConsoleBankHHR.git
 			}
 		}
-		if(accNumY ==0) {
+		if (accNumY == 0) {
 			System.out.println("요청하신 계좌번호가 없습니다.");
 		}
 	}
-		
+
 	// 출금하기
 	public void withdrawMoney() {
 		System.out.print("계좌번호를 입력하세요:");
@@ -146,8 +160,9 @@ public class AccountManager {
 		String accNum2 = scanner.nextLine();
 		System.out.print("출금하실 금액을 입력하세요:");
 		int withNum = scanner.nextInt();
-		
+
 		int accNumY = 0;
+<<<<<<< HEAD
 	
 			
 		for(int i=0 ; i<accCnt ; i++) {
@@ -192,17 +207,44 @@ public class AccountManager {
 			}
 			if (accNumY==0) {
 			System.out.println("입력하신 계좌번호가 없습니다.");
+=======
+
+		for (int i = 0; i < accCnt; i++) {
+			if (accNum2.equals(accArr[i].getAccount())) {
+				accNumY = 1;
+				if (accArr[i].getBalance() >= withNum) {
+					accArr[i].setBalance(accArr[i].getBalance() - withNum);
+					System.out.println("출금이 완료되었습니다.");
+					System.out.println("계좌 잔고: " + accArr[i].getBalance());
+				} else {
+					System.out.println("잔액이 부족합니다.");
+				}
+>>>>>>> branch 'main' of https://github.com/cutetrick/JavaConsoleBankHHR.git
 			}
 		}
+<<<<<<< HEAD
 		
+=======
+		if (accNumY == 0) {
+			System.out.println("입력하신 계좌번호가 없습니다.");
+		}
+>>>>>>> branch 'main' of https://github.com/cutetrick/JavaConsoleBankHHR.git
 	}
 
 	// 계좌 모든 정보 불러오기
 	public static void showAccInfo() {
+<<<<<<< HEAD
 		System.out.println("---------------------");
+=======
+		System.out.println("--------------------");
+>>>>>>> branch 'main' of https://github.com/cutetrick/JavaConsoleBankHHR.git
 		for (int i = 0; i < accCnt; i++) {
 			accArr[i].showAccount();
+<<<<<<< HEAD
 			System.out.println("---------------------");
+=======
+			System.out.println("--------------------");
+>>>>>>> branch 'main' of https://github.com/cutetrick/JavaConsoleBankHHR.git
 		}
 	}
 }
