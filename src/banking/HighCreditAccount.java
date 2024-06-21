@@ -11,37 +11,43 @@ public class HighCreditAccount extends Account {
 		super(account, name, balance);
 		this.rate = rate;
 		this.credit = credit;
+		
 	}
 
 	public void showAccount() {
 		System.out.println("신용신뢰계좌");
-		super.showAccount();
 		System.out.println("기본이자" + rate + "%");
 		System.out.println("신용등급" + credit);
 	}
 
-	public int getrate() {
-		return rate;
+	public double getRate() {
+		//형변환시 int로 되기 때문에 rate앞에 (double)을 넣어 실수로 바꿔준다
+		double interest = (double)rate/100;
+		return interest;
 	}
-	public void setrate(int rate) {
+	public void setRate(int rate) {
 		this.rate = rate;
 	}
-	public String getcredit() { 
+	public String getCredit() { 
 		return credit;
 	}
-	public void setcredit(String credit) { 
+	public void setCredit(String credit) { 
 		this.credit = credit;
 	}
+	
+	
+	
 	//이자 신용등급 나누기
-	private int getshowGrade(String credit) {
+	
+	public double getshowGrade() {
 		System.out.println("실행확인");
 		switch(credit) {
 		case "A":
-			 return 7;
+			 return ICustomDefine.A;
 		case "B":
-			return 4;
+			return ICustomDefine.B;
 		case "C":
-			return 2;
+			return ICustomDefine.C;
 			default:
 				return 0;
 		}

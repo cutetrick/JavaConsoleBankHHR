@@ -1,6 +1,6 @@
 package banking;
 
-public class Account {
+abstract class Account {
 	private String account;
 	private String name;
 	private int balance;
@@ -24,7 +24,7 @@ public class Account {
 	}
 
 	public void setBalance(int balance) {
-		this.balance = balance;
+		this.balance = balance; 
 	}
 
 
@@ -32,8 +32,5 @@ public class Account {
 		System.out.println("계좌번호" + account);
 		System.out.println("고객이름" + name);
 		System.out.println("잔고" + balance);
-		
-
-	
 	}
 }

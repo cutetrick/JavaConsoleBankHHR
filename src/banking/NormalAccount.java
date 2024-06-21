@@ -15,14 +15,13 @@ public class NormalAccount extends Account {
 		System.out.println("기본이자" + rate + "%");
 		
 	}
-	
 
-	public int getRate() {
-		return rate;
+	public double getRate() {
+		double interest = (double)rate/100;
+		return interest;
 	}
-	public void setRate(int rate) {
+	public void setrate(int rate) {
 		this.rate = rate;
 	}
-
 }
 

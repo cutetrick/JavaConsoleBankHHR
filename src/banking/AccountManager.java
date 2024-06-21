@@ -6,9 +6,13 @@ public class AccountManager {
 
 
 	// makeAccount 인스턴스 생성
-	public static int accCnt = 0;
-	public static Account accArr[] = new Account[50];
+	public static int accCnt;
+	public static Account accArr[];
 
+	public AccountManager() {
+		accArr = new Account[50];
+		accCnt = 0;
+	}
 	// 메인 메뉴 보여주기
 	public static void showMenu() {
 		System.out.println("-----Menu------");
@@ -19,7 +23,7 @@ public class AccountManager {
 		System.out.println("5. 프로그램 종료");
 		System.out.print("선택");
 	}
-
+		
 
 	// 계좌생성하기
 	public void makeAccount() {
@@ -36,9 +40,10 @@ public class AccountManager {
 			System.out.print("선택해주세요");
 			int number2 = scanner.nextInt();
 			scanner.nextLine();
+			
 			//1또는 2 아니면 유효하지 않는 숫자로 넘어감
-			if (!((number2 == 1) || (number2 == 2))) {				
-				System.out.println("유효하지 않는 숫자입니다.");
+			
+			if (!((number2 == 1) || (number2 == 2))) {			
 			} else {
 				//맞을 시 정보 입력 받기로 넘어감
 				System.out.print("계좌번호:");
@@ -47,11 +52,12 @@ public class AccountManager {
 				name = scanner.nextLine();
 				System.out.print("잔고:");
 				balan = scanner.nextInt();
-				
+				scanner.nextLine();
 				//만약 입력한 숫자가 1과 같을 때
 				if(number2 == 1) {
 					System.out.print("기본이자%(정수로 입력): ");
 					rate = scanner.nextInt();
+					scanner.nextLine();
 					//인스턴스 생성(들어간 정보)
 					Account account = new NormalAccount(accNum, name, balan, rate);
 					//인스턴스 저장 및 증가
@@ -88,21 +94,44 @@ public class AccountManager {
 
 		System.out.print("입금하실 금액을 입력하세요:");
 		int depNum = scanner.nextInt();
+		scanner.nextLine();
 		for(int i=0 ; i<accCnt ; i++) {
+			//입력한 금액이 0보다 작을 수 없다. 음수인지 확인
+			if (depNum < 0) {
+			System.out.println("음수를 입금 할 수 없습니다.");
+			return;
+		}
+			//500원 단위인지 확인
+			if (depNum % 500!=0) {
+				System.out.println("음수를 입금 할 수 없습니다.");
+				return;
+				}
+			
+			//이자
+			double interest = 0;
+			//추가이자
+			double credit = 0;
 			if(accNum2.equals(accArr[i].getAccount())) {
-				//accArr[i]를 노말로 바꿔불러옴
+				//accArr[i]를 instaneof를 통해 노말로 바꿔불러옴
 				if(accArr[i] instanceof NormalAccount) {
-					NormalAccount normal = (NormalAccount)accArr[i];
+					interest = ((NormalAccount)accArr[i]).getRate();
 				}
-				// accArr[i]를 high로 바꿔불러옴
+				// accArr[i]를 instanceof를 통해 high로 바꿔불러옴
 				if(accArr[i] instanceof HighCreditAccount) {
-					HighCreditAccount high = (HighCreditAccount)accArr[i];
+					//이자
+					interest = ((HighCreditAccount)accArr[i]).getRate();
+					//추가이자
+					credit = ((HighCreditAccount)accArr[i]).getshowGrade();
 				}
+				int money = accArr[i].getBalance();
+				//신용계좌 : 잔고 + (잔고 * 기본이자) + (잔고 * 추가이자) + 입금액
+				money += ((money * interest) +(money * credit) + depNum); 
+				accArr[i].setBalance(money);
 
-				//잔고 합산
-				accNumY=1;
-				accArr[i].setBalance(accArr[i].getBalance() + depNum);
 				System.out.println("잔고: " + accArr[i].getBalance());
+				accNumY = 1;
+			
+			
 			}
 		}
 		if(accNumY ==0) {
@@ -119,27 +148,52 @@ public class AccountManager {
 		int withNum = scanner.nextInt();
 		
 		int accNumY = 0;
-
+	
+			
 		for(int i=0 ; i<accCnt ; i++) {
 			if(accNum2.equals(accArr[i].getAccount())) {
 		
 				accNumY=1;
 				//잔고가 출금할 금액보다 큰지 작은지 확인
 				if(accArr[i].getBalance() >= withNum) {
+					//음수를 출금할 수 없습니다.
+					if (withNum < 0) {
+						System.out.println("음수를 출금 할 수 없습니다.");
+						return;
+					}
+						//1000원 단위인지 확인
+						if (withNum % 1000!=0 ) {
+							System.out.println("출금은 1000원 단위로만 가능합니다.");
+							return;
+							}
 					//잔고에서 출금금액 빼기
 				 accArr[i].setBalance(accArr[i].getBalance() - withNum);
 				 //총 남은 계좌 잔고
 				 System.out.println("계좌잔고: " + accArr[i].getBalance());
 			}//잔고가 부족시 else로 처리
 				else {
-				System.out.println("잔고가 부족합니다.");	
+				System.out.print("잔고가 부족합니다. 금액전체를 출금할까요?(y/n)");
+				scanner.nextLine();
+				String select = scanner.nextLine();
+				//equalsIgnoreCase가 대소문자 구분없이 해줌
+					if(select.equalsIgnoreCase("y")) {
+						
+					withNum = accArr[i].getBalance();
+					 accArr[i].setBalance(0);
+                     System.out.println("잔고 전체 출금 완료.");
+                     System.out.println("출금한 금액: " + withNum + "원");
+					}
+					else {
+				        System.out.println("출금 요청이 취소되었습니다." );
+				       //첫메뉴로 돌아감
+				        return;
+					}	
 				}
 			}
-		}
-		if (accNumY==0) {
+			if (accNumY==0) {
 			System.out.println("입력하신 계좌번호가 없습니다.");
+			}
 		}
-		
 		
 	}
 
