@@ -41,6 +41,9 @@ public class BankingSystemMain {
 	          case ICustomDefine.INQUIRE:
 	        	  handler.showAccInfo();
 	             break;
+	          case ICustomDefine.DELETE:
+	        	  handler.accountDelete();
+	        	  return;
 	          case ICustomDefine.EXIT:
 	        	  System.out.println("프로그램종료");
 	        	  return;
