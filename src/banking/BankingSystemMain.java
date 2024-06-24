@@ -4,8 +4,6 @@ import java.util.Scanner;
 			
 public class BankingSystemMain {
 
-	Account account;
-	
 	public static void main(String[] args) {
 	      Scanner scan = new Scanner(System.in);
 	      AccountManager handler = new AccountManager();
@@ -25,7 +23,7 @@ public class BankingSystemMain {
 	          // 1-5사이의 숫자가 아닐 시 예외발생, 문자로 입력시 오류
 	          catch(NumberFormatException e ) {
 	        	  System.out.println("유효하지 않는 숫자입니다.");
-	        	  System.out.println("1~5사이의 숫자를 입력해주세요."); 
+	        	  System.out.println("1~5사이의 숫자를 입력해주세요.");
 	          }
 	          switch(Menu) {
 	          case ICustomDefine.MAKE:
@@ -43,11 +41,10 @@ public class BankingSystemMain {
 	             break;
 	          case ICustomDefine.DELETE:
 	        	  handler.accountDelete();
-	        	  return;
+	        	  break;
 	          case ICustomDefine.EXIT:
 	        	  System.out.println("프로그램종료");
 	        	  return;
-	        	  
 	          } 
 	       } 
 	    } 
